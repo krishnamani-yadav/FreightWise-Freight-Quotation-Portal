@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreightWise – Smart Freight Quotation & Booking Portal</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <style>
+    :root {
+      --navy-dark: #0f172a;
+      --navy-card: #1e293b;
+      --ocean-blue: #0284c7;
+      --ocean-hover: #0369a1;
+      --ocean-light: #e0f2fe;
+      --ocean-accent: #38bdf8;
+      --border-color: #e2e8f0;
+      --bg-page: #f8fafc;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar styling */
+    .fw-navbar {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border-bottom: 2px solid rgba(2, 132, 199, 0.4);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.15);
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--ocean-blue) 0%, #06b6d4 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse-ring 2s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+
+    /* Cards */
+    .card-custom {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .card-custom:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header-custom {
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--border-color);
+      background-color: #ffffff;
+      border-top-left-radius: 14px !important;
+      border-top-right-radius: 14px !important;
+    }
+
+    .badge-navy {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-weight: 500;
+    }
+
+    .badge-ocean {
+      background-color: var(--ocean-light);
+      color: var(--ocean-hover);
+      border: 1px solid rgba(2, 132, 199, 0.2);
+      font-weight: 600;
+    }
+
+    /* Buttons */
+    .btn-ocean {
+      background-color: var(--ocean-blue);
+      border-color: var(--ocean-blue);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ocean:hover, .btn-ocean:focus {
+      background-color: var(--ocean-hover);
+      border-color: var(--ocean-hover);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+
+    .btn-navy {
+      background-color: var(--navy-dark);
+      border-color: var(--navy-dark);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+
+    .btn-navy:hover {
+      background-color: #1e293b;
+      border-color: #1e293b;
+      color: #ffffff;
+    }
+
+    /* Form inputs */
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--ocean-blue);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    /* Metrics Hero Banner */
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Quote Breakdown styling */
+    .quote-placeholder {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      background-color: #f8fafc;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .total-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2);
+    }
+
+    .total-amount {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: -0.5px;
+    }
+
+    /* Table styling */
+    .table-custom {
+      margin-bottom: 0;
+    }
+
+    .table-custom th {
+      background-color: #f1f5f9;
+      color: #475569;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .table-custom td {
+      padding: 0.9rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.92rem;
+    }
+
+    .table-custom tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    /* Badges */
+    .status-confirmed {
+      background-color: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .status-intransit {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #7dd3fc;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    /* Toast container */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1090;
+    }
+
+    /* Spinner animation */
+    .spinner-border-sm {
+      width: 1.1rem;
+      height: 1.1rem;
+      border-width: 0.15em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-dark fw-navbar py-3">
+    <div class="container-fluid px-lg-5">
+      <div class="d-flex align-items-center gap-3">
+        <div class="brand-icon">
+          <i class="bi bi-water text-white fs-4"></i>
+        </div>
+        <div>
+          <span class="navbar-brand mb-0 h1 fw-bold fs-4 d-block lh-1 text-white">
+            Freight<span style="color: var(--ocean-accent);">Wise</span>
+          </span>
+          <span class="text-slate-400 small text-light opacity-75" style="font-size: 0.78rem;">
+            Smart Freight Quotation & Booking Portal
+          </span>
+        </div>
+      </div>
+
+      <div class="d-none d-md-flex align-items-center gap-3">
+        <span class="stat-pill">
+          <span class="pulse-dot"></span> In-Memory EF Core Datastore Active
+        </span>
+        <span class="stat-pill">
+          <i class="bi bi-clock-history text-cyan"></i> Real-Time Instant Spot Rates
+        </span>
+        <span class="stat-pill">
+          <i class="bi bi-currency-dollar text-warning"></i> Currency: USD
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Secondary Metrics Strip -->
+  <div class="bg-dark py-2 text-white-50 border-bottom border-secondary border-opacity-25" style="background-color: #0b1120 !important;">
+    <div class="container-fluid px-lg-5">
+      <div class="d-flex flex-wrap justify-content-between align-items-center small gap-2">
+        <div>
+          <i class="bi bi-globe2 me-1 text-info"></i> Global Hubs:
+          <span class="text-white fw-semibold">Shanghai, Singapore, Rotterdam, Los Angeles, Nhava Sheva, Jebel Ali</span>
+        </div>
+        <div>
+          <i class="bi bi-shield-check me-1 text-success"></i> Fixed Deterministic Surcharges: 
+          <span class="text-white fw-semibold">BAF $175 | THC $125</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Workspace Container -->
+  <div class="container-fluid px-lg-5 my-4 flex-grow-1">
+    
+    <!-- Top Row: Calculator & Breakdown -->
+    <div class="row g-4">
+      
+      <!-- Left Panel: Instant Freight Calculator -->
+      <div class="col-lg-6">
+        <div class="card card-custom h-100">
+          <div class="card-header-custom d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-calculator-fill fs-5 text-primary"></i>
+              <h5 class="mb-0 fw-bold">Instant Freight Calculator</h5>
+            </div>
+            <span class="badge badge-ocean px-3 py-2 rounded-pill">
+              <i class="bi bi-lightning-charge-fill me-1 text-warning"></i> Spot Engine
+            </span>
+          </div>
+
+          <div class="card-body p-4">
+            <form id="quoteForm">
+              
+              <!-- Route Selection -->
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label for="originPort" class="form-label fw-semibold text-secondary small">
+                    <i class="bi bi-geo-alt-fill text-danger me-1"></i> Origin Port
+                  </label>
+                  <select id="originPort" class="form-select" required>
+                    <option value="" disabled selected>Loading origin ports...</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="destinationPort" class="form-label fw-semibold text-secondary small">
+                    <i class="bi bi-geo-fill text-success me-1"></i> Destination Port
+                  </label>
+                  <select id="destinationPort" class="form-select" required>
+                    <option value="" disabled selected>Loading destination ports...</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Container Type & Weight -->
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label for="containerType" class="form-label fw-semibold text-secondary small">
+                    <i class="bi bi-box-seam-fill text-primary me-1"></i> Equipment / Container
+                  </label>
+                  <select id="containerType" class="form-select" required>
+                    <option value="20ft Standard">20ft Standard Dry Container</option>
+                    <option value="40ft Standard">40ft Standard Dry Container</option>
+                    <option value="40ft High Cube" selected>40ft High Cube Dry Container</option>
+                    <option value="20ft Reefer">20ft Refrigerated Container (Reefer)</option>
+                    <option value="40ft Reefer">40ft Refrigerated Container (Reefer)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="cargoWeight" class="form-label fw-semibold text-secondary small">
+                    <i class="bi bi-speedometer2 text-info me-1"></i> Cargo Weight (Metric Tons)
+                  </label>
+                  <div class="input-group">
+                    <input type="number" step="0.1" min="0.5" max="32.0" class="form-control" id="cargoWeight" value="16.5" required />
+                    <span class="input-group-text bg-light text-muted">Tons</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cargo Description -->
+              <div class="mb-4">
+                <label for="cargoDescription" class="form-label fw-semibold text-secondary small">
+                  <i class="bi bi-card-text text-secondary me-1"></i> Commodity / Cargo Description
+                </label>
+                <input type="text" class="form-control" id="cargoDescription" placeholder="e.g. Industrial Automation Equipment, Electronics, Textiles" value="Industrial Electrical Components" required />
+              </div>
+
+              <!-- Route Validation Alert Box -->
+              <div id="routeAlert" class="alert alert-danger d-none py-2 px-3 small" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i> Origin and Destination ports cannot be the same!
+              </div>
+
+              <!-- Submit button -->
+              <div class="d-grid">
+                <button type="submit" id="calculateBtn" class="btn btn-ocean py-2 fs-6 shadow-sm">
+                  <span id="calcSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                  <i id="calcIcon" class="bi bi-search me-1"></i> Calculate Spot Quotation
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Quote Breakdown -->
+      <div class="col-lg-6">
+        <div class="card card-custom h-100">
+          <div class="card-header-custom d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-receipt fs-5 text-primary"></i>
+              <h5 class="mb-0 fw-bold">Spot Freight Breakdown</h5>
+            </div>
+            <div id="quoteStatusBadge">
+              <span class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill">
+                <i class="bi bi-dash-circle me-1"></i> Awaiting Calculation
+              </span>
+            </div>
+          </div>
+
+          <div class="card-body p-4 d-flex flex-column justify-content-between">
+            
+            <!-- Empty Placeholder -->
+            <div id="quotePlaceholder" class="quote-placeholder my-auto">
+              <div class="mb-3">
+                <i class="bi bi-ship fs-1 text-secondary opacity-50"></i>
+              </div>
+              <h6 class="fw-bold text-dark">No Freight Rate Calculated Yet</h6>
+              <p class="small text-muted mb-0">
+                Select your origin, destination, container type, and cargo weight on the left panel, then click <strong>Calculate Spot Quotation</strong> to generate real-time rates.
+              </p>
+            </div>
+
+            <!-- Active Quote Breakdown (Initially Hidden) -->
+            <div id="quoteContent" class="d-none">
+              
+              <!-- Header info badges -->
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 pb-3 border-bottom">
+                <div>
+                  <span class="badge bg-dark text-white px-3 py-2 rounded-pill small me-2" id="quoteIdBadge">
+                    QUO-20261029-XXXX
+                  </span>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill small">
+                    <i class="bi bi-lock-fill me-1"></i> Guaranteed Spot Rate
+                  </span>
+                </div>
+                <div class="small text-muted">
+                  <i class="bi bi-calendar-event me-1"></i> Valid until: <strong id="quoteValidUntil" class="text-dark">--</strong>
+                </div>
+              </div>
+
+              <!-- Route Card Banner -->
+              <div class="p-3 mb-3 bg-light rounded-3 border">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                  <div>
+                    <div class="text-uppercase small text-muted fw-semibold">Origin Hub</div>
+                    <div class="fw-bold text-dark" id="displayOrigin">--</div>
+                  </div>
+                  <div class="text-center px-2">
+                    <i class="bi bi-arrow-right fs-4 text-primary"></i>
+                    <div class="badge bg-primary text-white" id="displayTransitDays">-- Days Transit</div>
+                  </div>
+                  <div class="text-end">
+                    <div class="text-uppercase small text-muted fw-semibold">Destination Hub</div>
+                    <div class="fw-bold text-dark" id="displayDestination">--</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Detailed Line Items Table -->
+              <div class="mb-4">
+                <div class="breakdown-row">
+                  <span class="text-secondary">
+                    <i class="bi bi-water me-2 text-primary"></i> Base Ocean Freight
+                  </span>
+                  <span class="fw-semibold text-dark" id="baseOceanFreight">$0.00</span>
+                </div>
+                <div class="breakdown-row">
+                  <span class="text-secondary">
+                    <i class="bi bi-fuel-pump me-2 text-warning"></i> Bunker Adjustment Factor (BAF / Fuel)
+                  </span>
+                  <span class="fw-semibold text-dark" id="bunkerAdjustmentFactor">$175.00</span>
+                </div>
+                <div class="breakdown-row">
+                  <span class="text-secondary">
+                    <i class="bi bi-building me-2 text-info"></i> Terminal Handling Charges (THC)
+                  </span>
+                  <span class="fw-semibold text-dark" id="terminalHandlingCharge">$125.00</span>
+                </div>
+                <div class="breakdown-row">
+                  <span class="text-secondary">
+                    <i class="bi bi-box-seam me-2 text-secondary"></i> Equipment Specification
+                  </span>
+                  <span class="fw-semibold text-dark" id="displayContainer">--</span>
+                </div>
+              </div>
+
+              <!-- Total Ocean Freight Box -->
+              <div class="total-box d-flex justify-content-between align-items-center mb-4">
+                <div>
+                  <div class="text-light opacity-75 small text-uppercase fw-semibold tracking-wider">
+                    Total All-In Freight (USD)
+                  </div>
+                  <div class="small text-light opacity-50">
+                    Includes Ocean Freight, BAF Fuel & Port THC
+                  </div>
+                </div>
+                <div class="text-end">
+                  <div class="total-amount" id="totalRateUSD">$0.00</div>
+                </div>
+              </div>
+
+              <!-- Action: Trigger Booking Modal -->
+              <div class="d-grid">
+                <button type="button" id="bookTriggerBtn" class="btn btn-success btn-lg py-2 fs-6 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                  <i class="bi bi-check2-circle me-2"></i> Book This Freight Rate Now
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Section: Live Operational Bookings -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card card-custom">
+          
+          <div class="card-header-custom d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-table fs-5 text-primary"></i>
+              <h5 class="mb-0 fw-bold">Live Operational Freight Bookings</h5>
+              <span id="bookingCountBadge" class="badge badge-navy ms-2 px-2 py-1 rounded-pill">0</span>
+            </div>
+            <div>
+              <button id="refreshBookingsBtn" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                <i class="bi bi-arrow-clockwise"></i> Refresh Bookings
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-custom align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Shipper Organization</th>
+                    <th>Origin Port</th>
+                    <th>Destination Port</th>
+                    <th>Equipment</th>
+                    <th>Total Cost (USD)</th>
+                    <th>Status</th>
+                    <th>Date Booked</th>
+                  </tr>
+                </thead>
+                <tbody id="bookingsTableBody">
+                  <tr>
+                    <td colspan="8" class="text-center py-4 text-muted">
+                      <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                      Loading operational bookings...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        
+        <div class="modal-header bg-dark text-white p-4" style="border-top-left-radius: 16px; border-top-right-radius: 16px;">
+          <div>
+            <h5 class="modal-title fw-bold" id="bookingModalLabel">
+              <i class="bi bi-file-earmark-check-fill text-info me-2"></i>Confirm Freight Booking
+            </h5>
+            <p class="small text-light opacity-75 mb-0">Confirm your shipment dispatch and reserve equipment space.</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-target="#bookingModal" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form id="bookingForm">
+          <div class="modal-body p-4">
+            
+            <!-- Booking Summary Snippet -->
+            <div class="bg-light p-3 rounded-3 border mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="small text-muted fw-semibold">Guaranteed Total:</span>
+                <span class="fw-bold text-primary fs-5" id="modalTotalUSD">$0.00</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-1 small">
+                <span class="text-muted">Route:</span>
+                <span class="fw-semibold text-dark text-end" id="modalRouteSummary">--</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center small">
+                <span class="text-muted">Equipment:</span>
+                <span class="fw-semibold text-dark" id="modalContainerSummary">--</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="shipperName" class="form-label fw-semibold text-secondary small">
+                Shipper Company / Contact Name <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted"><i class="bi bi-building"></i></span>
+                <input type="text" class="form-control" id="shipperName" placeholder="e.g. Acme Ocean Logistics Ltd." required />
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="shipperEmail" class="form-label fw-semibold text-secondary small">
+                Shipper Contact Email <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted"><i class="bi bi-envelope"></i></span>
+                <input type="email" class="form-control" id="shipperEmail" placeholder="e.g. dispatch@acmelogistics.com" required />
+              </div>
+            </div>
+
+            <div id="bookingErrorAlert" class="alert alert-danger d-none py-2 px-3 small" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i> An error occurred while submitting your booking.
+            </div>
+
+          </div>
+
+          <div class="modal-footer p-3 bg-light" style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+            <button type="button" class="btn btn-outline-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submitBookingBtn" class="btn btn-ocean px-4">
+              <span id="bookingSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+              <i id="bookingBtnIcon" class="bi bi-check-lg me-1"></i> Confirm & Book
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container p-3">
+    <div id="notificationToast" class="toast align-items-center text-white bg-dark border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2" id="toastMessage">
+          <i class="bi bi-info-circle-fill text-info fs-5"></i> Notification text
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-auto py-3 bg-white border-top text-center text-muted small">
+    <div class="container">
+      FreightWise &copy; 2026 – Smart Freight Quotation & Booking Portal &bull; Powered by ASP.NET Core Web API &amp; Entity Framework Core In-Memory
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Application Logic -->
+  <script>
+    // Global State
+    let currentQuote = null;
+    let portsCache = [];
+    let bookingModalInstance = null;
+    let toastInstance = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initialize Bootstrap components
+      const modalEl = document.getElementById("bookingModal");
+      if (modalEl) {
+        bookingModalInstance = new bootstrap.Modal(modalEl);
+      }
+      
+      const toastEl = document.getElementById("notificationToast");
+      if (toastEl) {
+        toastInstance = new bootstrap.Toast(toastEl, { delay: 4500 });
+      }
+
+      // Event Listeners
+      document.getElementById("quoteForm").addEventListener("submit", handleQuoteCalculation);
+      document.getElementById("bookingForm").addEventListener("submit", handleBookingSubmission);
+      document.getElementById("refreshBookingsBtn").addEventListener("click", loadBookings);
+      
+      const originSelect = document.getElementById("originPort");
+      const destSelect = document.getElementById("destinationPort");
+      originSelect.addEventListener("change", validatePortsDifferent);
+      destSelect.addEventListener("change", validatePortsDifferent);
+
+      // Initial Data Loading
+      loadPorts();
+      loadBookings();
+    });
+
+    // Helper: Show Toast Notification
+    function showToast(message, type = "success") {
+      const toastEl = document.getElementById("notificationToast");
+      const toastMsgEl = document.getElementById("toastMessage");
+      
+      if (type === "success") {
+        toastEl.className = "toast align-items-center text-white bg-success border-0 shadow-lg";
+        toastMsgEl.innerHTML = `<i class="bi bi-check-circle-fill fs-5 me-1"></i> ${message}`;
+      } else if (type === "error") {
+        toastEl.className = "toast align-items-center text-white bg-danger border-0 shadow-lg";
+        toastMsgEl.innerHTML = `<i class="bi bi-exclamation-octagon-fill fs-5 me-1"></i> ${message}`;
+      } else {
+        toastEl.className = "toast align-items-center text-white bg-dark border-0 shadow-lg";
+        toastMsgEl.innerHTML = `<i class="bi bi-info-circle-fill text-info fs-5 me-1"></i> ${message}`;
+      }
+
+      if (toastInstance) {
+        toastInstance.show();
+      }
+    }
+
+    // Helper: Format Currency
+    function formatUSD(num) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2
+      }).format(num);
+    }
+
+    // Helper: Format Date
+    function formatDate(dateStr) {
+      if (!dateStr) return "--";
+      const date = new Date(dateStr);
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    // Validate that Origin and Destination are not the same
+    function validatePortsDifferent() {
+      const origin = document.getElementById("originPort").value;
+      const destination = document.getElementById("destinationPort").value;
+      const alertBox = document.getElementById("routeAlert");
+
+      if (origin && destination && origin === destination) {
+        alertBox.classList.remove("d-none");
+        return false;
+      } else {
+        alertBox.classList.add("d-none");
+        return true;
+      }
+    }
+
+    // Load Available Global Ports
+    async function loadPorts() {
+      const originSelect = document.getElementById("originPort");
+      const destSelect = document.getElementById("destinationPort");
+
+      try {
+        const response = await fetch("/api/quotes/ports");
+        if (!response.ok) {
+          throw new Error(`Failed to load ports: ${response.statusText}`);
+        }
+
+        const ports = await response.json();
+        portsCache = ports;
+
+        originSelect.innerHTML = `<option value="" disabled>Select origin port...</option>`;
+        destSelect.innerHTML = `<option value="" disabled>Select destination port...</option>`;
+
+        ports.forEach((port, index) => {
+          const opt1 = document.createElement("option");
+          opt1.value = port.portCode;
+          opt1.textContent = `${port.portName} (${port.country}) [${port.portCode}]`;
+          
+          const opt2 = document.createElement("option");
+          opt2.value = port.portCode;
+          opt2.textContent = `${port.portName} (${port.country}) [${port.portCode}]`;
+
+          originSelect.appendChild(opt1);
+          destSelect.appendChild(opt2);
+        });
+
+        // Pre-select popular route (Shanghai -> Los Angeles)
+        const shaPort = ports.find(p => p.portCode === "CNSHA");
+        const laxPort = ports.find(p => p.portCode === "USLAX");
+        
+        if (shaPort) originSelect.value = shaPort.portCode;
+        if (laxPort) destSelect.value = laxPort.portCode;
+
+      } catch (err) {
+        console.error("Error loading ports:", err);
+        originSelect.innerHTML = `<option value="" disabled>Error loading ports</option>`;
+        destSelect.innerHTML = `<option value="" disabled>Error loading ports</option>`;
+        showToast("Failed to fetch ports list from API.", "error");
+      }
+    }
+
+    // Calculate Spot Freight Quotation
+    async function handleQuoteCalculation(e) {
+      e.preventDefault();
+
+      if (!validatePortsDifferent()) {
+        showToast("Origin and Destination ports cannot be identical.", "error");
+        return;
+      }
+
+      const originPortCode = document.getElementById("originPort").value;
+      const destinationPortCode = document.getElementById("destinationPort").value;
+      const containerType = document.getElementById("containerType").value;
+      const cargoWeightTons = parseFloat(document.getElementById("cargoWeight").value) || 10;
+      const cargoDescription = document.getElementById("cargoDescription").value.trim();
+
+      const btn = document.getElementById("calculateBtn");
+      const spinner = document.getElementById("calcSpinner");
+      const icon = document.getElementById("calcIcon");
+
+      btn.disabled = true;
+      spinner.classList.remove("d-none");
+      icon.classList.add("d-none");
+
+      const payload = {
+        originPortCode,
+        destinationPortCode,
+        containerType,
+        cargoWeightTons,
+        cargoDescription
+      };
+
+      try {
+        const response = await fetch("/api/quotes/calculate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({ message: "Calculation failed" }));
+          throw new Error(errData.message || "Failed to calculate quote.");
+        }
+
+        const quote = await response.json();
+        currentQuote = quote;
+        renderQuoteBreakdown(quote);
+        showToast(`Spot quote calculated: ${formatUSD(quote.totalRateUSD)}`, "success");
+
+      } catch (err) {
+        console.error("Calculation error:", err);
+        showToast(err.message || "Error calculating freight quote.", "error");
+      } finally {
+        btn.disabled = false;
+        spinner.classList.add("d-none");
+        icon.classList.remove("d-none");
+      }
+    }
+
+    // Render Quote Breakdown on UI
+    function renderQuoteBreakdown(quote) {
+      document.getElementById("quotePlaceholder").classList.add("d-none");
+      const contentEl = document.getElementById("quoteContent");
+      contentEl.classList.remove("d-none");
+
+      // Update badge header
+      document.getElementById("quoteStatusBadge").innerHTML = `
+        <span class="badge badge-ocean px-3 py-2 rounded-pill">
+          <i class="bi bi-check-circle-fill me-1 text-success"></i> Spot Quote Generated
+        </span>
+      `;
+
+      document.getElementById("quoteIdBadge").textContent = quote.quoteId;
+      document.getElementById("quoteValidUntil").textContent = quote.validUntilDate;
+
+      document.getElementById("displayOrigin").textContent = quote.originPort;
+      document.getElementById("displayDestination").textContent = quote.destinationPort;
+      document.getElementById("displayTransitDays").textContent = `${quote.estimatedTransitDays} Days Transit`;
+
+      document.getElementById("baseOceanFreight").textContent = formatUSD(quote.baseOceanFreight);
+      document.getElementById("bunkerAdjustmentFactor").textContent = formatUSD(quote.bunkerAdjustmentFactor);
+      document.getElementById("terminalHandlingCharge").textContent = formatUSD(quote.terminalHandlingCharge);
+      document.getElementById("displayContainer").textContent = quote.containerType;
+      document.getElementById("totalRateUSD").textContent = formatUSD(quote.totalRateUSD);
+
+      // Prepopulate modal summary data
+      document.getElementById("modalTotalUSD").textContent = formatUSD(quote.totalRateUSD);
+      document.getElementById("modalRouteSummary").textContent = `${quote.originPort} → ${quote.destinationPort}`;
+      document.getElementById("modalContainerSummary").textContent = `${quote.containerType} (${quote.estimatedTransitDays} Days)`;
+    }
+
+    // Handle Booking Submission
+    async function handleBookingSubmission(e) {
+      e.preventDefault();
+
+      if (!currentQuote) {
+        showToast("Please calculate a quote first before booking.", "error");
+        return;
+      }
+
+      const shipperName = document.getElementById("shipperName").value.trim();
+      const shipperEmail = document.getElementById("shipperEmail").value.trim();
+      const errorAlert = document.getElementById("bookingErrorAlert");
+
+      if (!shipperName || !shipperEmail) {
+        errorAlert.textContent = "Please fill in all required contact details.";
+        errorAlert.classList.remove("d-none");
+        return;
+      }
+
+      errorAlert.classList.add("d-none");
+
+      const btn = document.getElementById("submitBookingBtn");
+      const spinner = document.getElementById("bookingSpinner");
+      const icon = document.getElementById("bookingBtnIcon");
+
+      btn.disabled = true;
+      spinner.classList.remove("d-none");
+      icon.classList.add("d-none");
+
+      const payload = {
+        shipperName: shipperName,
+        shipperEmail: shipperEmail,
+        originPort: currentQuote.originPort,
+        destinationPort: currentQuote.destinationPort,
+        containerType: currentQuote.containerType,
+        totalAmountUSD: currentQuote.totalRateUSD
+      };
+
+      try {
+        const response = await fetch("/api/bookings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({ message: "Booking dispatch failed" }));
+          throw new Error(errData.message || "Failed to confirm booking.");
+        }
+
+        const newBooking = await response.json();
+
+        // Close modal and reset form
+        if (bookingModalInstance) {
+          bookingModalInstance.hide();
+        }
+        document.getElementById("bookingForm").reset();
+
+        showToast(`Freight Booked! Reference #${newBooking.bookingReference} issued successfully.`, "success");
+
+        // Refresh live operational table
+        await loadBookings();
+
+      } catch (err) {
+        console.error("Booking error:", err);
+        errorAlert.textContent = err.message || "Failed to confirm booking.";
+        errorAlert.classList.remove("d-none");
+        showToast(err.message || "Booking dispatch failed.", "error");
+      } finally {
+        btn.disabled = false;
+        spinner.classList.add("d-none");
+        icon.classList.remove("d-none");
+      }
+    }
+
+    // Load Live Operational Bookings
+    async function loadBookings() {
+      const tableBody = document.getElementById("bookingsTableBody");
+      const countBadge = document.getElementById("bookingCountBadge");
+
+      try {
+        const response = await fetch("/api/bookings");
+        if (!response.ok) {
+          throw new Error(`Failed to load bookings: ${response.statusText}`);
+        }
+
+        const bookings = await response.json();
+        countBadge.textContent = bookings.length;
+
+        if (bookings.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="8" class="text-center py-4 text-muted">
+                <i class="bi bi-inbox fs-4 d-block mb-1 opacity-50"></i>
+                No operational bookings found. Use the calculator above to create one.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tableBody.innerHTML = "";
+        bookings.forEach((booking) => {
+          const tr = document.createElement("tr");
+
+          const statusClass = (booking.status || "").toLowerCase().includes("transit") 
+            ? "status-intransit" 
+            : "status-confirmed";
+
+          const statusIcon = (booking.status || "").toLowerCase().includes("transit")
+            ? "bi-arrow-repeat me-1"
+            : "bi-check2-circle me-1";
+
+          tr.innerHTML = `
+            <td>
+              <span class="badge bg-dark font-monospace px-2 py-1 text-light border">
+                ${booking.bookingReference}
+              </span>
+            </td>
+            <td>
+              <div class="fw-semibold text-dark">${escapeHtml(booking.shipperName)}</div>
+              <div class="small text-muted"><i class="bi bi-envelope me-1"></i>${escapeHtml(booking.shipperEmail)}</div>
+            </td>
+            <td>
+              <span class="text-dark fw-medium">${escapeHtml(booking.originPort)}</span>
+            </td>
+            <td>
+              <span class="text-dark fw-medium">${escapeHtml(booking.destinationPort)}</span>
+            </td>
+            <td>
+              <span class="badge bg-light text-dark border">${escapeHtml(booking.containerType)}</span>
+            </td>
+            <td class="fw-bold text-primary">
+              ${formatUSD(booking.totalAmountUSD)}
+            </td>
+            <td>
+              <span class="${statusClass}">
+                <i class="bi ${statusIcon}"></i>${escapeHtml(booking.status)}
+              </span>
+            </td>
+            <td class="text-muted small">
+              ${formatDate(booking.createdAt)}
+            </td>
+          `;
+
+          tableBody.appendChild(tr);
+        });
+
+      } catch (err) {
+        console.error("Error loading bookings:", err);
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-4 text-danger">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i> Failed to retrieve bookings.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // Helper: Escape HTML to prevent injection
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
+
